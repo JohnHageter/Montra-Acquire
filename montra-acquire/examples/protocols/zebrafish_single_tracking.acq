@@ -1,0 +1,46 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Single Zebrafish Acquisition — Baseline + Stimulus
+#
+# Records a pre-stimulus baseline and a post-stimulus window for a single
+# zebrafish larva.  A TTL pulse via the DAQ marks the stimulus onset so the
+# two video files are time-aligned in downstream analysis.
+#
+# Prerequisites:
+#   1. Open and start the camera (Live button).
+#   2. (Optional) Draw a Watch Window around the arena to reduce frame size
+#      (Watch Window → Draw).  Smaller frames = faster disk writes.
+#   3. Set the output directory at the top of the Acquisition window.
+#   4. Adjust SET fps / exposure below for your light source.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Session metadata ──────────────────────────────────────────────────────────
+SET subject   = fish01
+SET replicate = 1
+
+# ── Camera setup ──────────────────────────────────────────────────────────────
+SET fps      = 25
+SET exposure = 8000       # microseconds — adjust for your light source
+
+# ── Capture background image ──────────────────────────────────────────────────
+# Averages 30 frames with a mild blur; saved as background.png in output dir.
+LOG "Capturing background…"
+SNAPSHOT bg 30 5
+
+# ── Baseline (no stimulus) ────────────────────────────────────────────────────
+SET condition = baseline
+LOG "Recording baseline (60 s)…"
+RECORD 60
+
+# ── Stimulus via DAQ ──────────────────────────────────────────────────────────
+# Adjust channel name and duration for your hardware setup.
+DAQ_PULSE Dev1/port0/line0, 1.0   # 1-second TTL pulse
+LOG "Stimulus delivered."
+
+# ── Post-stimulus recording ───────────────────────────────────────────────────
+SET condition = post_stimulus
+LOG "Recording post-stimulus (120 s)…"
+RECORD 120
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+LOG "Done.  Videos saved to output directory."
+ELAPSE

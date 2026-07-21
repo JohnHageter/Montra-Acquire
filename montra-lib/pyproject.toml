@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "montra"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "opencv-python",
+    "h5py",
+    "scipy",
+    "scikit-image",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+yolo = ["ultralytics>=8.3"]
+ids  = ["ids_peak", "ids_peak_ipl"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["montra*"]

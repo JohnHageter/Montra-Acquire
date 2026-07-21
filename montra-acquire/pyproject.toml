@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "montra-acquire"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = [
+    "montra",
+    "PySide6",
+]
+
+[project.optional-dependencies]
+daq = ["nidaqmx"]
+
+[project.scripts]
+planaria-acquire = "main_acquisition:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["montra_acquire*"]

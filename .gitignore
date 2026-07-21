@@ -1,0 +1,12 @@
+.vscode/
+build/
+dist/
+*.zip
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+models/
+configs/
+tests/
